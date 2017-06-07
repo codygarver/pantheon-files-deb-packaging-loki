@@ -1,0 +1,42 @@
+--- a/filechooser-module/FileChooserDialog.vala
++++ b/filechooser-module/FileChooserDialog.vala
+@@ -23,12 +23,6 @@
+  *   in the Gtk+3 source code package.  Changes to that file could break this code.
+ ***/
+ public class CustomFileChooserDialog : Object {
+-    private static Gtk.FileChooserDialog chooser_dialog;
+-    private static Gtk.Widget rootwidget;
+-    
+-    private static Gtk.Box container_box;
+-    private static Gtk.Button? gtk_folder_button = null;
+-
+     /* Response to get parent of the bottom box */
+     private const int BUTTON_RESPONSE = -6;
+ 
+@@ -38,6 +32,12 @@
+     private const string[] GTK_TREEVIEW_PATH = { "browse_files_stack", "browse_files_swin", "browse_files_tree_view" };
+     private const string PLACES_SIDEBAR_PATH = "places_sidebar";
+ 
++    private unowned Gtk.FileChooserDialog chooser_dialog;
++    private unowned Gtk.Widget rootwidget;
++
++    private unowned Gtk.Box container_box;
++    private unowned Gtk.Button? gtk_folder_button = null;
++
+     private GLib.Queue<string> previous_paths;
+     private GLib.Queue<string> next_paths;
+ 
+--- a/filechooser-module/Plugin.vala
++++ b/filechooser-module/Plugin.vala
+@@ -22,9 +22,9 @@
+ 
+ public class PantheonModule.FileChooserDialog : GLib.Object {
+     /* Catching dialogs section by: tintou (https://launchpad.net/~tintou) */
+-    Gee.TreeSet<Gtk.FileChooserDialog> tree_set;
++    Gee.TreeSet<unowned Gtk.FileChooserDialog> tree_set;
+     public FileChooserDialog () {
+-        tree_set = new Gee.TreeSet<Gtk.FileChooserDialog> ();
++        tree_set = new Gee.TreeSet<unowned Gtk.FileChooserDialog> ();
+         /* We need to register the Gtk.Dialog class first */
+         (typeof (Gtk.Dialog)).class_ref ();
+         /* It's the only way to get every new window */
